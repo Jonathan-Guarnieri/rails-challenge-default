@@ -1,5 +1,8 @@
 FROM ruby:2.5.1
 
+# adds Debian Stretch repository to the sources list resolving errors due to missing Release files
+RUN echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.list
+
 RUN apt-get update -qq \
   && apt-get install -y build-essential libpq-dev nodejs \
   && apt-get clean all \
