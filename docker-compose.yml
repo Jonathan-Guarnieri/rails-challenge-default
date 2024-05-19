@@ -21,6 +21,8 @@ services:
       - redis
     environment:
       - REDIS_URL_SIDEKIQ=redis://redis:6379/1
+      - DISABLE_SPRING=true
+      - DISABLE_LISTEN=true
 
   redis:
     image: 'redis:5-alpine'
