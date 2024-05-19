@@ -33,6 +33,10 @@ gem 'bootsnap', '>= 1.1.0', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails', '~> 4.1.0'
+  # factory_bot 6.4.5 has a syntax error with ruby 2.5.1 (maybe future versions as well)
+  gem 'factory_bot', '!= 6.4.5'
+  gem 'factory_bot_rails', '~> 6.4', '>= 6.4.3'
 end
 
 group :development do
