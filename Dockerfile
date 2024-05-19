@@ -1,7 +1,10 @@
 FROM ruby:2.5.1
 
-# adds Debian Stretch repository to the sources list resolving errors due to missing Release files
-RUN echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.list
+# Adds Debian Stretch repository to the sources list resolving errors due to missing Release files
+RUN echo "deb http://deb.debian.org/debian buster main" > /etc/apt/sources.list
+
+# Add necessary GPG keys (public key)
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 648ACFD622F3D138 0E98404D386FA1D9 DCC9EFBF77E11517
 
 RUN apt-get update -qq \
   && apt-get install -y build-essential libpq-dev nodejs \
