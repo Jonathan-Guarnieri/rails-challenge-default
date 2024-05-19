@@ -37,6 +37,7 @@ group :development, :test do
   # factory_bot 6.4.5 has a syntax error with ruby 2.5.1 (maybe future versions as well)
   gem 'factory_bot', '!= 6.4.5'
   gem 'factory_bot_rails', '~> 6.4', '>= 6.4.3'
+  gem 'faker', '~> 2.14'
 end
 
 group :development do
