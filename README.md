@@ -167,3 +167,13 @@ curl -H "Content-Type: application/json" -X POST https://w7nbdj3b3nsy3uycjqd7bmu
 
 ### Environment
 - Initial Rails 5.2 API application
+
+## Troubleshooting
+- `Function not implemented - Failed to initialize inotify (Errno::ENOSYS)`
+
+   This issue arises because the M1 ARM Docker is using qemu, which doesn't support inotify. To resolve this, comment out this line:
+   ```ruby
+   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+   ```
+   in `config/environments/development.rb`
+   
