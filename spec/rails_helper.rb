@@ -63,4 +63,6 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include FactoryBot::Syntax::Methods
+
+  ActiveJob::Base.queue_adapter = :test
 end
