@@ -10,12 +10,10 @@ module Api
 
     def create
       user_params[:password] =  hash_password(user_params[:password])
-      user = User.new(user_params.merge(
-        key: generate_key,
-        account_key: fetch_account_key
-      ))
+      user = User.new(user_params.merge(key: generate_key))
 
       if user.save
+        generate_account_key(user.id)
         render json: user.as_json(only: DISPLAYABLE_FIELDS), status: :created
       else
         render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
@@ -38,9 +36,8 @@ module Api
       BCrypt::Password.create(password)
     end
 
-    def fetch_account_key
-      # Simulate fetching an account key from an external service
-      SecureRandom.hex(16)
+    def generate_account_key(user_id)
+      GenerateAccountKeyJob.perform_later(user_id)
     end
   end
 end

@@ -56,6 +56,12 @@ RSpec.describe Api::UsersController, type: :controller do
         expect(response).to have_http_status(:created)
       end
 
+      it 'enqueues a job to generate the account key' do
+        expect {
+          post :create, params: valid_attributes
+      }.to have_enqueued_job(GenerateAccountKeyJob).with(a_kind_of(Integer)).on_queue('default')
+      end
+
       it 'returns the created user' do
         post :create, params: valid_attributes
         json_response = JSON.parse(response.body)
@@ -64,7 +70,7 @@ RSpec.describe Api::UsersController, type: :controller do
         expect(json_response['phone_number']).to eq(valid_attributes[:phone_number])
         expect(json_response['full_name']).to eq(valid_attributes[:full_name])
         expect(json_response['key']).to be_present
-        expect(json_response['account_key']).to be_present
+        expect(json_response['account_key']).to be_nil
         expect(json_response['metadata']).to eq(valid_attributes[:metadata])
       end
     end
